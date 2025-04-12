@@ -45,21 +45,32 @@ class GameSprite(sprite.Sprite):
             self.rect.y += self.speed
 
 
-class Player_right (GameSprite):
-    def update(self):
+class Player (GameSprite):
+    def update_r(self):
         keys_pressed = key.get_pressed()
         if keys_pressed[K_UP]:
             super().goUp()
         if keys_pressed[K_DOWN]:
             super().goDown()
-      
-class Player_left (GameSprite):
-    def update(self):
+    def update_l(self):
         keys_pressed = key.get_pressed()
         if keys_pressed[K_w]:
             super().goUp()
         if keys_pressed[K_s]:
             super().goDown()
+      
+
+class Ball(GameSprite):
+    #надо обработать движение на вектор (dx, dy) и столкновение со стенками
+    def goThere(self, dx,dy):
+        if dy=0:
+            dy=1
+        if self.rect.x >= self.speed and self.rect.x < window_size_x - self.size_x and self.rect.x < window_size_x - self.speed:
+            self.rect.x += dx*self.speed
+        if self.rect.y >= self.speed and self.rect.y < window_size_y - self.size_y and self.rect.y < window_size_y - self.speed:
+            self.rect.y += dy*self.speed
+
+
 
 window = display.set_mode((700,500))
 
@@ -80,8 +91,8 @@ font2 = font.SysFont('Arial', 36)
 font1 = font.SysFont('Arial', 72)
 
 
-player_left = Player_left("puddle.jpg",10, 250, 25, 100, 10)
-player_right = Player_right("puddle.jpg",670, 250, 25, 100, 10)
+player_left = Player("puddle.jpg",10, 250, 25, 100, 10)
+player_right = Player("puddle.jpg",670, 250, 25, 100, 10)
 
 
 finish=False
@@ -94,8 +105,8 @@ while game:
 
     if not finish:
         window.blit(background,(0,0))
-        player_left.update()
-        player_right.update()
+        player_left.update_l()
+        player_right.update_r()
 
         player_left.reset()
         player_right.reset()
