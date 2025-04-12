@@ -63,7 +63,7 @@ class Player (GameSprite):
 class Ball(GameSprite):
     #надо обработать движение на вектор (dx, dy) и столкновение со стенками
     def goThere(self, dx,dy):
-        if dy=0:
+        if dy==0:
             dy=1
         if self.rect.x >= self.speed and self.rect.x < window_size_x - self.size_x and self.rect.x < window_size_x - self.speed:
             self.rect.x += dx*self.speed
