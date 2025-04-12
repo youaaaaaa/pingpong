@@ -1,3 +1,5 @@
+#Создай собственный Шутер!
+
 from pygame import *
 from pygame import sprite
 from random import randint
@@ -43,7 +45,7 @@ class GameSprite(sprite.Sprite):
             self.rect.y += self.speed
 
 
-class Player (GameSprite):
+class Player_right (GameSprite):
     def update(self):
         keys_pressed = key.get_pressed()
         if keys_pressed[K_UP]:
@@ -51,6 +53,13 @@ class Player (GameSprite):
         if keys_pressed[K_DOWN]:
             super().goDown()
       
+class Player_left (GameSprite):
+    def update(self):
+        keys_pressed = key.get_pressed()
+        if keys_pressed[K_w]:
+            super().goUp()
+        if keys_pressed[K_s]:
+            super().goDown()
 
 window = display.set_mode((700,500))
 
@@ -71,7 +80,8 @@ font2 = font.SysFont('Arial', 36)
 font1 = font.SysFont('Arial', 72)
 
 
-player = Player("puddle.jpg",50, 250, 50, 100, 10)
+player_left = Player_left("puddle.jpg",10, 250, 25, 100, 10)
+player_right = Player_right("puddle.jpg",670, 250, 25, 100, 10)
 
 
 finish=False
@@ -84,9 +94,11 @@ while game:
 
     if not finish:
         window.blit(background,(0,0))
-        player.update()
+        player_left.update()
+        player_right.update()
 
-        player.reset()
+        player_left.reset()
+        player_right.reset()
     
     display.update()
 
